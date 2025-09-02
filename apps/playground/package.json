@@ -1,0 +1,17 @@
+{
+    "name": "@mf-react-rsc/playground",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "tsx src/dev.ts",
+        "build": "tsc -p tsconfig.json"
+    },
+    "dependencies": {
+        "@mf-react-rsc/core": "workspace:*"
+    },
+    "devDependencies": {
+        "@mf-react-rsc/config": "workspace:*",
+        "tsx": "^4.0.0",
+        "typescript": "^5.0.0"
+    }
+}

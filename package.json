@@ -1,0 +1,26 @@
+{
+    "name": "mf-react-rsc-monorepo",
+    "private": true,
+    "type": "module",
+    "packageManager": "pnpm@10.15.1",
+    "scripts": {
+        "dev": "pnpm --filter @mf-react-rsc/playground dev",
+        "build": "pnpm -r build",
+        "test": "pnpm -r test",
+        "lint": "eslint \"**/*.{ts,tsx,js,jsx}\" --ignore-pattern \"**/dist/**\" --ignore-pattern \"**/node_modules/**\"",
+        "lint:fix": "pnpm lint --fix",
+        "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+        "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
+        "typecheck": "tsc --noEmit",
+        "validate": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm build",
+        "prepare": "husky"
+    },
+    "devDependencies": {
+        "@mf-react-rsc/config": "workspace:*",
+        "@eslint/js": "^9.0.0",
+        "eslint": "^9.0.0",
+        "prettier": "^3.0.0",
+        "typescript": "^5.0.0",
+        "husky": "^9.0.0"
+    }
+}

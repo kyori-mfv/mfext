@@ -1,0 +1,31 @@
+{
+    "name": "@mf-react-rsc/config",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "main": "dist/index.js",
+    "exports": {
+        "./eslint": "./eslint.config.js",
+        "./prettier": "./prettier.config.js",
+        "./tsconfig": "./tsconfig.json"
+    },
+    "files": [
+        "eslint.config.js",
+        "prettier.config.js",
+        "tsconfig.json"
+    ],
+    "devDependencies": {
+        "@eslint/js": "^9.0.0",
+        "@typescript-eslint/eslint-plugin": "^8.0.0",
+        "@typescript-eslint/parser": "^8.0.0",
+        "eslint": "^9.0.0",
+        "eslint-config-prettier": "^9.0.0",
+        "prettier": "^3.0.0",
+        "typescript": "^5.0.0"
+    },
+    "peerDependencies": {
+        "eslint": "^9.0.0",
+        "prettier": "^3.0.0",
+        "typescript": "^5.0.0"
+    }
+}

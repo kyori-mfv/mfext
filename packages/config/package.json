@@ -1,11 +1,17 @@
 {
-    "name": "@mf-react-rsc/config",
+    "name": "@mfext/config",
     "version": "0.0.0",
     "private": true,
     "type": "module",
     "main": "dist/index.js",
+    "scripts": {
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix"
+    },
     "exports": {
         "./eslint": "./eslint.config.js",
+        "./eslint/node": "./eslint.config.js",
+        "./eslint/browser": "./eslint.config.js",
         "./prettier": "./prettier.config.js",
         "./tsconfig": "./tsconfig.json"
     },

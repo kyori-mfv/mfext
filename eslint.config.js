@@ -1,3 +1,2 @@
-import config from "@mf-react-rsc/config/eslint";
-
-export default config;
+// Root ESLint config - delegates to individual package configs
+export default [];

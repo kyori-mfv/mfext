@@ -1,8 +1,12 @@
 {
-    "extends": "../../packages/config/tsconfig.base.json",
+    "extends": "@mfext/config/tsconfig",
     "compilerOptions": {
         "outDir": "dist",
-        "declaration": true
+        "declaration": true,
+        "paths": {
+            "@/*": ["./src/*"],
+            "@/components/*": ["./src/components/*"]
+        }
     },
     "include": ["src"]
 }

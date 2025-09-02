@@ -1,8 +1,15 @@
 {
-    "extends": "../config/tsconfig.base.json",
+    "extends": "@mfext/config/tsconfig",
     "compilerOptions": {
         "outDir": "dist",
-        "declaration": true
+        "declaration": true,
+        "lib": ["ES2020", "DOM", "DOM.Iterable"],
+        "paths": {
+            "@/*": ["./src/*"],
+            "@/tools/*": ["./src/tools/*"],
+            "@/types/*": ["./src/types/*"]
+        }
     },
-    "include": ["src"]
+    "include": ["src/**/*", "rsc-server.tsx", "ssr-server.tsx", "global.d.ts"],
+    "exclude": ["node_modules", "dist", "public"]
 }

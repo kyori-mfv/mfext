@@ -6,6 +6,7 @@ node_modules/
 # Production builds
 dist/
 build/
+public/
 
 # Development
 .idea/

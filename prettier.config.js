@@ -1,3 +1,3 @@
-import config from "@mf-react-rsc/config/prettier";
+import config from "@mfext/config/prettier";
 
 export default config;

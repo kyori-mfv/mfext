@@ -1,7 +1,10 @@
 import express from "express";
 import { renderToPipeableStream } from "react-server-dom-webpack/server.node";
-import MainApp from "@/index";
-import { getPageComponent, loadRoutesManifest } from "@/tools/manifest-router";
+import MainApp from "~core/index";
+import {
+    getPageComponent,
+    loadRoutesManifest,
+} from "~core/tools/manifest-router";
 import fs from "fs-extra";
 import path from "path";
 

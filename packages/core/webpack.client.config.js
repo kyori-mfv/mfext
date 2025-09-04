@@ -40,9 +40,9 @@ export default () => {
                                     {
                                         root: ["./src"],
                                         alias: {
-                                            "@": "./src",
-                                            "@/types": "./src/types",
-                                            "@/tools": "./src/tools",
+                                            "~core": "./src",
+                                            "~core/types": "./src/types",
+                                            "~core/tools": "./src/tools",
                                         },
                                     },
                                 ],
@@ -69,8 +69,8 @@ export default () => {
             conditionNames: ["browser"],
             alias: {
                 "@": path.resolve(__dirname, "src"),
-                "@/types": path.resolve(__dirname, "src/types"),
-                "@/tools": path.resolve(__dirname, "src/tools"),
+                "~core/types": path.resolve(__dirname, "src/types"),
+                "~core/tools": path.resolve(__dirname, "src/tools"),
             },
         },
     };

@@ -45,9 +45,9 @@ export default () => {
                                     {
                                         root: ["./src"],
                                         alias: {
-                                            "@": "./src",
-                                            "@/types": "./src/types",
-                                            "@/tools": "./src/tools",
+                                            "~core": "./src",
+                                            "~core/types": "./src/types",
+                                            "~core/tools": "./src/tools",
                                         },
                                     },
                                 ],
@@ -63,8 +63,8 @@ export default () => {
             modules: [path.resolve(__dirname, "node_modules"), "node_modules"],
             alias: {
                 "@": path.resolve(buildConfig.originalCwd, "src"),
-                "@/types": path.resolve(__dirname, "src/types"),
-                "@/tools": path.resolve(__dirname, "src/tools"),
+                "~core/types": path.resolve(__dirname, "src/types"),
+                "~core/tools": path.resolve(__dirname, "src/tools"),
             },
         },
         // plugins: [new ExcludeClientComponentsPlugin()],

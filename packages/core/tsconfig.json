@@ -5,9 +5,9 @@
         "declaration": true,
         "lib": ["ES2020", "DOM", "DOM.Iterable"],
         "paths": {
-            "@/*": ["./src/*"],
-            "@/tools/*": ["./src/tools/*"],
-            "@/types/*": ["./src/types/*"]
+            "~core/*": ["./src/*"],
+            "~core/tools/*": ["./src/tools/*"],
+            "~core/types/*": ["./src/types/*"]
         }
     },
     "include": ["src/**/*", "rsc-server.tsx", "ssr-server.tsx", "global.d.ts"],

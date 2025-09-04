@@ -1,7 +1,10 @@
 import express from "express";
 import { renderToString } from "react-dom/server";
-import { getPageComponent, loadRoutesManifest } from "@/tools/manifest-router";
-import MainApp from "@/index";
+import {
+    getPageComponent,
+    loadRoutesManifest,
+} from "~core/tools/manifest-router";
+import MainApp from "~core/index";
 import { getBuildConfig } from "./build-config.js";
 
 const app = express();

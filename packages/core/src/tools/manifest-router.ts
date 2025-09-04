@@ -1,4 +1,4 @@
-import { RoutesManifest, PageInfo } from "@/types";
+import { RoutesManifest, PageInfo } from "~core/types";
 import * as fs from "fs-extra";
 import { getBuildConfig } from "../../build-config.js";
 

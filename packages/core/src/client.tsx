@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
 import { createFromReadableStream } from "react-server-dom-webpack/client";
-import { RSCProps } from "@/types";
+import { RSCProps } from "~core/types";
 import React from "react";
 
 declare global {

@@ -1,7 +1,6 @@
 import { createRoot } from "react-dom/client";
 import { createFromReadableStream } from "react-server-dom-webpack/client";
 import { RSCProps } from "~core/types";
-import React from "react";
 
 declare global {
     interface Window {
@@ -28,11 +27,7 @@ async function bootstrap() {
         throw new Error("Root element not found");
     }
 
-    console.log("React version:", React.version);
-    console.log("useState:", typeof React.useState);
-
     const root = createRoot(rootElement);
-    console.log(rsc);
     root.render(rsc);
 }
 

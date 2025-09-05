@@ -1,10 +1,7 @@
 import express from "express";
 import { renderToPipeableStream } from "react-server-dom-webpack/server.node";
 import MainApp from "~core/index";
-import {
-    getPageComponent,
-    loadRoutesManifest,
-} from "~core/tools/manifest-router";
+import { getPageComponent, loadRoutesManifest } from "~core/router";
 import fs from "fs-extra";
 import path from "path";
 
@@ -13,7 +10,6 @@ const PORT = 5001;
 
 app.use("/static", express.static("public"));
 
-// RSC API endpoint
 app.use("/rsc", async (req, res) => {
     const { path: routePath } = req.query;
     if (!routePath || typeof routePath !== "string") {
@@ -25,12 +21,6 @@ app.use("/rsc", async (req, res) => {
         const { default: pageComponent } = await getPageComponent(
             routePath,
             routesManifest,
-        );
-        console.log(
-            "RSC Server - pageComponent",
-            pageComponent,
-            req.path,
-            req.query,
         );
 
         res.setHeader("Content-Type", "text/x-component");

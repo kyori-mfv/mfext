@@ -3,6 +3,8 @@
     "private": true,
     "type": "module",
     "scripts": {
+        "build": "mfext build",
+        "start": "mfext start",
         "lint": "eslint .",
         "lint:fix": "eslint . --fix"
     },

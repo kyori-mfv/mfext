@@ -24,18 +24,16 @@ export function getBuildConfig() {
 
         // Build tool configs
         webpackConfigs: {
-            ssr: path.resolve(__dirname, "webpack.ssr.config.js"),
-            rsc: path.resolve(__dirname, "webpack.rsc.config.js"),
-            client: path.resolve(__dirname, "webpack.client.config.js"),
+            ssr: path.resolve(__dirname, "webpack", "ssr.config.js"),
+            rsc: path.resolve(__dirname, "webpack", "rsc.config.js"),
+            client: path.resolve(__dirname, "webpack", "client.config.js"),
         },
 
-        // Server ports
         ports: {
             ssr: 5000,
             rsc: 5001,
         },
 
-        // Original working directory
         originalCwd,
     };
 }

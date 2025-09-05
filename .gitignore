@@ -8,6 +8,8 @@ dist/
 build/
 public/
 
+!packages/core/src/build/
+
 # Development
 .idea/
 

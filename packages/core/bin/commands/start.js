@@ -1,7 +1,7 @@
 import { spawn } from "child_process";
 import path from "path";
 import fs from "fs";
-import { getBuildConfig } from "../../build-config.js";
+import { getBuildConfig } from "../../src/build/build-config.js";
 
 function startServer(serverType) {
     const buildConfig = getBuildConfig();
@@ -73,13 +73,9 @@ function startServer(serverType) {
 function startBothServers() {
     const servers = [];
 
-    // Start RSC server
-    console.log("📋 Starting RSC server...");
     const rscServer = startServer("rsc");
     servers.push({ type: "RSC", ...rscServer });
 
-    // Start SSR server
-    console.log("📋 Starting SSR server...");
     const ssrServer = startServer("ssr");
     servers.push({ type: "SSR", ...ssrServer });
 

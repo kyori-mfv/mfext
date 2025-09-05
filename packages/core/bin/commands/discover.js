@@ -1,7 +1,7 @@
 import { glob } from "glob";
 import path from "path";
 import fs from "fs-extra";
-import { getBuildConfig } from "../../build-config.js";
+import { getBuildConfig } from "../../src/build/build-config.js";
 
 // Convert file path to route path
 function filePathToRoute(filePath) {

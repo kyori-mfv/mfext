@@ -2,7 +2,7 @@ import { spawn } from "child_process";
 import path from "path";
 import fs from "fs";
 import { createRequire } from "module";
-import { getBuildConfig } from "../../build-config.js";
+import { getBuildConfig } from "../../src/build/build-config.js";
 import { discoverCommand } from "./discover.js";
 
 const require = createRequire(import.meta.url);

@@ -2,7 +2,7 @@ import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
 import ReactServerWebpackPlugin from "react-server-dom-webpack/plugin";
-import { getBuildConfig } from "./build-config.js";
+import { getBuildConfig } from "../build-config.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -39,11 +39,19 @@ export class WebpackConfigBuilder {
                         [
                             "module-resolver",
                             {
-                                root: ["./src"],
                                 alias: {
-                                    "~core": "./src",
-                                    "~core/types": "./src/types",
-                                    "~core/tools": "./src/tools",
+                                    "~core/types": path.resolve(
+                                        __dirname,
+                                        "../../types",
+                                    ),
+                                    "~core/router": path.resolve(
+                                        __dirname,
+                                        "../../router",
+                                    ),
+                                    "~core/app": path.resolve(
+                                        __dirname,
+                                        "../../app",
+                                    ),
                                 },
                             },
                         ],
@@ -65,9 +73,9 @@ export class WebpackConfigBuilder {
                 : undefined,
             alias: {
                 "@": path.resolve(this.buildConfig.originalCwd, "src"),
-                "~core": path.resolve(__dirname, "src"),
-                "~core/types": path.resolve(__dirname, "src/types"),
-                "~core/tools": path.resolve(__dirname, "src/tools"),
+                "~core/app": path.resolve(__dirname, "../../app"),
+                "~core/types": path.resolve(__dirname, "../../types"),
+                "~core/router": path.resolve(__dirname, "../../router"),
             },
         };
     }
@@ -98,7 +106,7 @@ export class WebpackConfigBuilder {
     buildClientConfig() {
         return {
             ...this.getBaseConfig(),
-            entry: path.resolve(__dirname, "./src/client.tsx"),
+            entry: path.resolve(__dirname, "../../client/index.tsx"),
             output: {
                 path: this.buildConfig.publicDir,
                 filename: "client.js",
@@ -133,7 +141,10 @@ export class WebpackConfigBuilder {
                 outputModule: true,
             },
             entry: {
-                "ssr-server": path.resolve(__dirname, "ssr-server.tsx"),
+                "ssr-server": path.resolve(
+                    __dirname,
+                    "../../server/ssr-server.tsx",
+                ),
             },
             target: "node",
             output: {
@@ -158,7 +169,10 @@ export class WebpackConfigBuilder {
         return {
             ...this.getBaseConfig(false), // RSC doesn't need @babel/preset-env
             entry: {
-                "rsc-server": path.resolve(__dirname, "rsc-server.tsx"),
+                "rsc-server": path.resolve(
+                    __dirname,
+                    "../../server/rsc-server.tsx",
+                ),
             },
             target: "node",
             output: {

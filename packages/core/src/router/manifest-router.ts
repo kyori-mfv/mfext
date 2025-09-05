@@ -1,16 +1,12 @@
 import { RoutesManifest, PageInfo } from "~core/types";
 import * as fs from "fs-extra";
-import { getBuildConfig } from "../../build-config.js";
+import { getBuildConfig } from "../build/build-config.js";
 
 export async function loadRoutesManifest(): Promise<RoutesManifest> {
     const buildConfig = getBuildConfig();
-    const manifestPath = buildConfig.routesManifestPath;
-    console.log("Manifest path:", manifestPath);
-    const manifest: RoutesManifest = await fs
-        .readJson(manifestPath)
+    return fs
+        .readJson(buildConfig.routesManifestPath)
         .catch(() => ({ pages: {}, routes: [] }));
-
-    return manifest;
 }
 
 export function getPageComponent(
@@ -23,7 +19,6 @@ export function getPageComponent(
         throw new Error(`Page not found: ${routePath}`);
     }
 
-    console.log("Loading page:", page);
     return import(`@/pages/${page.component}`);
 }
 

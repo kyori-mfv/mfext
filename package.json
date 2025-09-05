@@ -4,6 +4,8 @@
     "type": "module",
     "packageManager": "pnpm@10.15.1",
     "scripts": {
+        "playground:build": "cd apps/playground && pnpm build",
+        "playground:start": "cd apps/playground && pnpm start",
         "lint": "pnpm -r lint",
         "lint:fix": "pnpm -r lint:fix",
         "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",

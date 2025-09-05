@@ -1,11 +1,8 @@
 import express from "express";
 import { renderToString } from "react-dom/server";
-import {
-    getPageComponent,
-    loadRoutesManifest,
-} from "~core/tools/manifest-router";
+import { getPageComponent, loadRoutesManifest } from "~core/router";
 import MainApp from "~core/index";
-import { getBuildConfig } from "./build-config.js";
+import { getBuildConfig } from "../build/build-config.js";
 
 const app = express();
 const PORT = 5000;
@@ -13,12 +10,8 @@ const buildConfig = getBuildConfig();
 
 app.use("/static", express.static(buildConfig.publicDir));
 
-// Proxy RSC requests to dedicated RSC server
 app.use("/rsc", (req, res) => {
-    const rscServerUrl = `http://localhost:5001${req.originalUrl}`;
-    console.log("Proxying RSC request to:", rscServerUrl);
-
-    fetch(rscServerUrl)
+    fetch(`http://localhost:5001${req.originalUrl}`)
         .then((response) => {
             res.status(response.status);
             response.headers.forEach((value, key) => {
@@ -50,9 +43,7 @@ app.use("/rsc", (req, res) => {
 
 // Universal route handler - serve static HTML shell
 app.get("*", async (req, res) => {
-    // Check if route exists in manifest
     const routesManifest = await loadRoutesManifest();
-    console.log("Routes manifest:", routesManifest);
     const pageInfo = routesManifest.pages[req.path];
 
     if (!pageInfo) {
@@ -76,7 +67,6 @@ app.get("*", async (req, res) => {
     );
     const appHTML = renderToString(<MainApp pageComponent={pageComponent} />);
 
-    // Send static HTML shell
     const html = `
         <!DOCTYPE html>
         <html>

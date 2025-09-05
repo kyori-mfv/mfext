@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+        "Bash(mkdir:*)",
+        "Bash(node:*)",
+        "Bash(pnpm:*)",
+        "Bash(chmod:*)",
+        "Bash(find:*)",
+        "Bash(pkill:*)",
+        "Bash(git diff:*)",
+        "Bash(git cached diff:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

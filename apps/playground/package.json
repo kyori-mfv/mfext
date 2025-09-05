@@ -6,7 +6,8 @@
         "build": "mfext build",
         "start": "mfext start",
         "lint": "eslint .",
-        "lint:fix": "eslint . --fix"
+        "lint:fix": "eslint . --fix",
+        "typecheck": "tsc --noEmit"
     },
     "dependencies": {
         "@mfext/core": "workspace:*",

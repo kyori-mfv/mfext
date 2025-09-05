@@ -3,3 +3,4 @@
 
 echo "Running validation before push..."
 pnpm validate
+pnpm build

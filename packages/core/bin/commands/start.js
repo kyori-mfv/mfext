@@ -1,102 +1,120 @@
-import { spawn } from "child_process";
+import { getBuildConfig } from "../../src/build/build-config.js";
 import path from "path";
 import fs from "fs";
-import { getBuildConfig } from "../../src/build/build-config.js";
+import { spawn } from "child_process";
 
-function startServer(serverType) {
+function checkBuildFiles() {
     const buildConfig = getBuildConfig();
+    const distPath = path.join(buildConfig.originalCwd, "dist");
 
-    // Use bootstrap files from dist folder
-    const bootstrapScriptName =
-        serverType === "rsc" ? "rsc-bootstrap.cjs" : "ssr-bootstrap.mjs";
-    const bootstrapScriptPath = path.join(
-        buildConfig.originalCwd,
-        "dist",
-        bootstrapScriptName,
-    );
-
-    // Check if bootstrap file exists
-    if (!fs.existsSync(bootstrapScriptPath)) {
-        console.error(`❌ Bootstrap file not found: ${bootstrapScriptPath}`);
-        console.log(
-            "💡 Run 'mfext build bootstrap' or 'mfext build all' to create bootstrap files",
-        );
+    // Check if dist directory exists
+    if (!fs.existsSync(distPath)) {
+        console.error("❌ Build files not found. Please run build first:");
+        console.log("💡 Run 'mfext build' to create necessary build files");
         process.exit(1);
     }
 
-    // Start the server
-    const nodeArgs =
-        serverType === "rsc"
-            ? ["--conditions", "react-server", bootstrapScriptPath]
-            : [bootstrapScriptPath];
+    // Check for compiled server files
+    const rscServerPath = path.join(distPath, "rsc", "rsc-server.cjs");
+    const ssrServerPath = path.join(distPath, "ssr", "ssr-server.js");
 
-    const child = spawn("node", nodeArgs, {
-        stdio: "inherit",
-        cwd: buildConfig.originalCwd,
-        env: {
-            ...process.env,
-            originalCwd: buildConfig.originalCwd,
-        },
-    });
+    if (!fs.existsSync(rscServerPath) && !fs.existsSync(ssrServerPath)) {
+        console.error(
+            "❌ Compiled server files not found. Please run build first:",
+        );
+        console.log("💡 Run 'mfext build' to create necessary build files");
+        process.exit(1);
+    }
+}
 
-    // Clean up function that handles child process
-    const cleanup = (signal) => {
-        try {
-            // Kill the child process if it's still running
-            if (child && !child.killed) {
-                child.kill(signal || "SIGTERM");
-            }
-        } catch {
-            // Ignore cleanup errors
-        }
-    };
+function createRSCServerScript(distPath) {
+    const scriptContent = `
+const path = require("path");
 
-    child.on("error", (error) => {
-        console.error(`❌ Failed to start ${serverType} server:`, error);
-        cleanup();
+// Required setup for RSC server
+require("react-server-dom-webpack/node-register")();
+
+const rscServerPath = path.join("${distPath}", "rsc", "rsc-server.cjs");
+const rscModule = require(rscServerPath);
+
+if (rscModule.createRSCServer) {
+    const server = rscModule.createRSCServer({ port: 5001 });
+    server.start().catch(error => {
+        console.error("❌ Failed to start RSC server:", error.message);
         process.exit(1);
     });
+} else {
+    console.error("❌ createRSCServer function not found in compiled bundle");
+    process.exit(1);
+}
+    `.trim();
 
-    child.on("exit", (code) => {
-        if (code !== 0) {
-            console.error(
-                `❌ ${serverType.toUpperCase()} server exited with code ${code}`,
+    const scriptPath = path.join(distPath, "rsc-starter.cjs");
+    fs.writeFileSync(scriptPath, scriptContent);
+    return scriptPath;
+}
+
+async function startServerFromBuild(serverType) {
+    const buildConfig = getBuildConfig();
+    const distPath = path.join(buildConfig.originalCwd, "dist");
+    const processes = [];
+
+    if (serverType === "rsc" || serverType === "both") {
+        const rscServerPath = path.join(distPath, "rsc", "rsc-server.cjs");
+        if (fs.existsSync(rscServerPath)) {
+            console.log("🚀 Starting RSC server from compiled bundle...");
+
+            // Create RSC server starter script
+            const rscStarterScript = createRSCServerScript(distPath);
+
+            // Start with --conditions react-server
+            const rscProcess = spawn(
+                "node",
+                ["--conditions", "react-server", rscStarterScript],
+                {
+                    stdio: "inherit",
+                    cwd: buildConfig.originalCwd,
+                },
             );
+
+            rscProcess.on("error", (error) => {
+                console.error("❌ Failed to start RSC server:", error);
+            });
+
+            processes.push({ type: "rsc", process: rscProcess });
         }
-        cleanup();
-        process.exit(code);
-    });
+    }
 
-    return { child, cleanup };
-}
-
-function startBothServers() {
-    const servers = [];
-
-    const rscServer = startServer("rsc");
-    servers.push({ type: "RSC", ...rscServer });
-
-    const ssrServer = startServer("ssr");
-    servers.push({ type: "SSR", ...ssrServer });
-
-    // Combined cleanup function
-    const cleanup = (signal) => {
-        servers.forEach(({ type, cleanup: serverCleanup }) => {
-            try {
-                serverCleanup(signal);
-            } catch (error) {
-                console.error(`Error stopping ${type} server:`, error);
+    if (serverType === "ssr" || serverType === "both") {
+        const ssrServerPath = path.join(distPath, "ssr", "ssr-server.js");
+        if (fs.existsSync(ssrServerPath)) {
+            console.log("🚀 Starting SSR server from compiled bundle...");
+            const { createSSRServer } = await import(ssrServerPath);
+            if (createSSRServer) {
+                const server = createSSRServer({ port: 5000 });
+                await server.start();
             }
-        });
-    };
+        }
+    }
 
-    // Handle graceful shutdown for all servers
-    process.on("SIGINT", () => cleanup("SIGINT"));
-    process.on("SIGTERM", () => cleanup("SIGTERM"));
-    process.on("exit", cleanup);
+    // Setup cleanup for spawned processes
+    if (processes.length > 0) {
+        const cleanup = () => {
+            processes.forEach(({ type, process: proc }) => {
+                if (proc && !proc.killed) {
+                    console.log(`🛑 Stopping ${type.toUpperCase()} server...`);
+                    proc.kill("SIGTERM");
+                }
+            });
+        };
+
+        process.on("SIGINT", cleanup);
+        process.on("SIGTERM", cleanup);
+        process.on("exit", cleanup);
+    }
 }
 
-export function startCommand(args) {
+export async function startCommand(args) {
     const serverType = args[0] || "both";
 
     if (serverType !== "rsc" && serverType !== "ssr" && serverType !== "both") {
@@ -105,18 +123,32 @@ export function startCommand(args) {
         process.exit(1);
     }
 
-    if (serverType === "both") {
-        console.log("🚀 Starting both RSC and SSR servers concurrently...");
-        startBothServers();
-        return;
+    // Check if build files exist
+    checkBuildFiles();
+
+    try {
+        console.log(
+            `🚀 Starting ${serverType === "both" ? "both RSC and SSR" : serverType.toUpperCase()} server${serverType === "both" ? "s" : ""}...`,
+        );
+
+        await startServerFromBuild(serverType);
+
+        console.log("\n📊 Servers started successfully!");
+        console.log("🎯 Servers are running. Press Ctrl+C to stop.\n");
+
+        // Set up graceful shutdown
+        const gracefulShutdown = () => {
+            console.log("\n🔄 Shutting down gracefully...");
+            process.exit(0);
+        };
+
+        process.on("SIGINT", gracefulShutdown);
+        process.on("SIGTERM", gracefulShutdown);
+
+        // Keep the process alive
+        process.stdin.resume();
+    } catch (error) {
+        console.error(`❌ Failed to start servers:`, error.message);
+        process.exit(1);
     }
-
-    console.log(`🚀 Starting ${serverType.toUpperCase()} server...`);
-
-    const { cleanup } = startServer(serverType);
-
-    // Handle graceful shutdown
-    process.on("SIGINT", () => cleanup("SIGINT"));
-    process.on("SIGTERM", () => cleanup("SIGTERM"));
-    process.on("exit", cleanup);
 }

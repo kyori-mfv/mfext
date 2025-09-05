@@ -4,13 +4,13 @@
     "type": "module",
     "packageManager": "pnpm@10.15.1",
     "scripts": {
-        "playground:build": "cd apps/playground && pnpm build",
-        "playground:start": "cd apps/playground && pnpm start",
+        "build": "pnpm -r build",
+        "start": "pnpm -r start",
         "lint": "pnpm -r lint",
         "lint:fix": "pnpm -r lint:fix",
         "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
         "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
-        "typecheck": "tsc --noEmit",
+        "typecheck": "pnpm -r typecheck",
         "validate": "pnpm lint && pnpm format:check && pnpm typecheck",
         "prepare": "husky"
     },

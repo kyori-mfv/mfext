@@ -1,10 +1,56 @@
 import { spawn } from "child_process";
 import path from "path";
+import fs from "fs";
 import { createRequire } from "module";
 import { getBuildConfig } from "../../build-config.js";
 import { discoverCommand } from "./discover.js";
 
 const require = createRequire(import.meta.url);
+
+function createRscBootstrap() {
+    const buildConfig = getBuildConfig();
+    const distPath = path.join(buildConfig.originalCwd, "dist");
+
+    // Ensure dist directory exists
+    if (!fs.existsSync(distPath)) {
+        fs.mkdirSync(distPath, { recursive: true });
+    }
+
+    // Create RSC bootstrap file
+    const rscBootstrapPath = path.join(distPath, "rsc-bootstrap.cjs");
+    const rscBootstrapContent = `
+require("react-server-dom-webpack/node-register")();
+require("./rsc/rsc-server.cjs");
+    `.trim();
+
+    // Write RSC bootstrap file
+    fs.writeFileSync(rscBootstrapPath, rscBootstrapContent);
+
+    console.log("✅ Created RSC bootstrap file:");
+    console.log(`   - ${rscBootstrapPath}`);
+}
+
+function createSsrBootstrap() {
+    const buildConfig = getBuildConfig();
+    const distPath = path.join(buildConfig.originalCwd, "dist");
+
+    // Ensure dist directory exists
+    if (!fs.existsSync(distPath)) {
+        fs.mkdirSync(distPath, { recursive: true });
+    }
+
+    // Create SSR bootstrap file
+    const ssrBootstrapPath = path.join(distPath, "ssr-bootstrap.mjs");
+    const ssrBootstrapContent = `
+import "./ssr/ssr-server.js";
+    `.trim();
+
+    // Write SSR bootstrap file
+    fs.writeFileSync(ssrBootstrapPath, ssrBootstrapContent);
+
+    console.log("✅ Created SSR bootstrap file:");
+    console.log(`   - ${ssrBootstrapPath}`);
+}
 
 async function runWebpackBuild(buildType, args = []) {
     const webpack = require.resolve("webpack-cli/bin/cli.js");
@@ -67,6 +113,7 @@ export async function buildCommand(args) {
             firstArg === "rsc" ||
             firstArg === "client" ||
             firstArg === "discover" ||
+            firstArg === "bootstrap" ||
             firstArg === "all"
         ) {
             buildType = firstArg;
@@ -91,8 +138,15 @@ export async function buildCommand(args) {
                 discoverCommand([]);
                 break;
 
+            case "bootstrap":
+                console.log("📋 Creating bootstrap files...");
+                createRscBootstrap();
+                createSsrBootstrap();
+                break;
+
             case "rsc":
                 await runWebpackBuild("rsc", webpackArgs);
+                createRscBootstrap();
                 break;
 
             case "client":
@@ -101,6 +155,7 @@ export async function buildCommand(args) {
 
             case "ssr":
                 await runWebpackBuild("ssr", webpackArgs);
+                createSsrBootstrap();
                 break;
 
             case "all":
@@ -119,17 +174,21 @@ export async function buildCommand(args) {
                 // Step 3: Build SSR
                 console.log("\n📋 Step 3: Building SSR...");
                 await runWebpackBuild("ssr", webpackArgs);
+                createSsrBootstrap();
 
                 // Step 4: Build RSC
                 console.log("\n📋 Step 4: Building RSC...");
                 await runWebpackBuild("rsc", webpackArgs);
+                createRscBootstrap();
 
                 console.log("\n🎉 Full build pipeline completed successfully!");
                 break;
 
             default:
                 console.error(`❌ Unknown build type: ${buildType}`);
-                console.log("Available types: discover, rsc, client, ssr, all");
+                console.log(
+                    "Available types: discover, rsc, client, ssr, bootstrap, all",
+                );
                 process.exit(1);
         }
     } catch (error) {
@@ -146,9 +205,10 @@ Usage: mfext build [<type>] [options]
 
 Build Types:
   discover          Discover pages and generate routes manifest
-  rsc              Build React Server Components
+  rsc              Build React Server Components (includes RSC bootstrap)
   client           Build client-side bundle
-  ssr              Build Server-Side Rendering
+  ssr              Build Server-Side Rendering (includes SSR bootstrap)
+  bootstrap        Create bootstrap files for starting servers
   all              Run full pipeline: discover -> client -> ssr -> rsc (default)
 
 Examples:
@@ -157,6 +217,7 @@ Examples:
   mfext build rsc                # Build RSC only
   mfext build client             # Build client only
   mfext build ssr                # Build SSR only
+  mfext build bootstrap          # Create bootstrap files only
   mfext build all                # Run full pipeline
 
 Webpack Options (passed through to webpack):

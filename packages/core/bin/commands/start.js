@@ -6,35 +6,23 @@ import { getBuildConfig } from "../../build-config.js";
 function startServer(serverType) {
     const buildConfig = getBuildConfig();
 
-    // Create bootstrap script in the playground directory with unique name
-    const timestamp = Date.now();
-    const randomId = Math.random().toString(36).substring(2, 8);
+    // Use bootstrap files from dist folder
     const bootstrapScriptName =
-        serverType === "rsc"
-            ? `rsc-bootstrap-${timestamp}-${randomId}.cjs`
-            : `ssr-bootstrap-${timestamp}-${randomId}.mjs`;
+        serverType === "rsc" ? "rsc-bootstrap.cjs" : "ssr-bootstrap.mjs";
     const bootstrapScriptPath = path.join(
         buildConfig.originalCwd,
+        "dist",
         bootstrapScriptName,
     );
 
-    // Generate bootstrap content based on server type
-    let bootstrapContent;
-    if (serverType === "rsc") {
-        // RSC server requires react-server-dom-webpack registration
-        bootstrapContent = `
-require("react-server-dom-webpack/node-register")();
-require("./dist/rsc/rsc-server.cjs");
-        `.trim();
-    } else {
-        // SSR server uses ES modules
-        bootstrapContent = `
-import "./dist/ssr/ssr-server.js";
-        `.trim();
+    // Check if bootstrap file exists
+    if (!fs.existsSync(bootstrapScriptPath)) {
+        console.error(`❌ Bootstrap file not found: ${bootstrapScriptPath}`);
+        console.log(
+            "💡 Run 'mfext build bootstrap' or 'mfext build all' to create bootstrap files",
+        );
+        process.exit(1);
     }
-
-    // Write the bootstrap script
-    fs.writeFileSync(bootstrapScriptPath, bootstrapContent);
 
     // Start the server
     const nodeArgs =
@@ -47,25 +35,16 @@ import "./dist/ssr/ssr-server.js";
         cwd: buildConfig.originalCwd,
         env: {
             ...process.env,
-            NODE_ENV:
-                serverType === "rsc"
-                    ? "rsc"
-                    : process.env.NODE_ENV || "development",
             originalCwd: buildConfig.originalCwd,
         },
     });
 
-    // Clean up function that handles both child process and bootstrap file
+    // Clean up function that handles child process
     const cleanup = (signal) => {
         try {
             // Kill the child process if it's still running
             if (child && !child.killed) {
                 child.kill(signal || "SIGTERM");
-            }
-
-            // Remove the bootstrap script
-            if (fs.existsSync(bootstrapScriptPath)) {
-                fs.unlinkSync(bootstrapScriptPath);
             }
         } catch {
             // Ignore cleanup errors

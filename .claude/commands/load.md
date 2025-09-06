@@ -43,9 +43,23 @@ When this command is used, Claude should:
 2. **ALWAYS** read development-plan.md for project overview
 3. **ALWAYS** read all .md files from development/rules/ directory (flexible for future rules)
 4. Read the specified additional documentation file(s)
-5. Analyze current project state based on all loaded documentation
-6. Show summary of what's loaded
-7. Be ready for implementation tasks with full context
+5. **MANDATORY**: Run `pnpm validate` to check code quality
+6. **AUTO-FIX**: If validation fails, automatically run:
+   - `pnpm lint:fix` for ESLint errors
+   - `pnpm format` for Prettier formatting issues
+   - Alert about TypeScript errors that need manual fixing
+7. **ENFORCE DEVELOPMENT RULES**: Claude must strictly follow ALL rules from `.claude/development/rules/*`:
+   - Apply code-conventions.md requirements to all code changes
+   - Follow impl-process.md workflow for implementation steps
+   - Execute validation.md procedures before task completion
+   - Refuse any implementation approach that violates established rules
+8. **RULE COMPLIANCE CHECK**: Before starting any implementation task:
+   - Confirm understanding of all loaded development rules
+   - Explicitly state which rules apply to the current task
+   - Ask for clarification if any rule conflicts or is unclear
+9. Analyze current project state based on all loaded documentation
+10. Show summary of what's loaded and applicable rules
+11. Be ready for implementation tasks with strict rule adherence and clean codebase
 
 ## Behavior
 
@@ -66,6 +80,23 @@ When this command is used, Claude should:
 - `development/rules/*.md` - All development rules (flexible for future additions):
   - Currently includes: code-conventions.md, impl-process.md, validation.md
   - Automatically includes any new rules added to the directory
+
+## Rule Enforcement Behavior
+
+**MANDATORY COMPLIANCE**: After loading, Claude must:
+
+1. **Rule Prioritization**: Development rules take precedence over general programming practices
+2. **Strict Adherence**: No deviation from established rules without explicit user permission
+3. **Proactive Application**: Apply rules automatically without being reminded
+4. **Rule Conflicts**: When rules conflict, ask for clarification rather than making assumptions
+5. **Implementation Gate**: Refuse to proceed with tasks that would violate loaded rules
+6. **Continuous Compliance**: Maintain rule adherence throughout the entire implementation process
+
+**Rule Violation Response**: If asked to do something that violates development rules:
+- Clearly state which rule(s) would be violated
+- Explain why the approach conflicts with established standards
+- Propose alternative approaches that comply with the rules
+- Only proceed after explicit user override or rule modification
 
 ## Additional Documentation Files
 

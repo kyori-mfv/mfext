@@ -1,7 +1,6 @@
+import React from "react";
 import express from "express";
 import { renderToPipeableStream } from "react-server-dom-webpack/server.node";
-import MainApp from "~core/app";
-import { getPageComponent, loadRoutesManifest } from "~core/router";
 import fs from "fs-extra";
 import path from "path";
 import { Server } from "http";
@@ -66,10 +65,19 @@ export function createRSCServer(
         }
 
         try {
-            const routesManifest = await loadRoutesManifest();
-            const { default: pageComponent } = await getPageComponent(
-                routePath,
-                routesManifest,
+            const { getAppRoute, loadAllAppComponents } = await import(
+                "~core/router"
+            );
+            const { default: AppRouterMain } = await import("~core/app");
+
+            const appRoute = await getAppRoute(routePath);
+            if (!appRoute) {
+                return res.status(404).send("App Router page not found");
+            }
+
+            const components = await loadAllAppComponents(appRoute);
+            const appContent = (
+                <AppRouterMain route={appRoute} components={components} />
             );
 
             res.setHeader("Content-Type", "text/x-component");
@@ -82,10 +90,8 @@ export function createRSCServer(
                     ),
                 )
                 .catch(() => ({}));
-            const { pipe } = renderToPipeableStream(
-                <MainApp pageComponent={pageComponent} />,
-                clientManifest,
-            );
+
+            const { pipe } = renderToPipeableStream(appContent, clientManifest);
 
             pipe(res);
         } catch (error) {

@@ -1,5 +1,4 @@
 import { spawn } from "child_process";
-import path from "path";
 import { createRequire } from "module";
 import { getBuildConfig } from "../../src/build/build-config.js";
 import { discoverCommand } from "./discover.js";
@@ -27,7 +26,7 @@ async function runWebpackBuild(buildType, args = []) {
             [webpack, ...args, "--config", configFile],
             {
                 stdio: "inherit",
-                cwd: path.dirname(configFile),
+                cwd: buildConfig.originalCwd,
                 env: {
                     ...process.env,
                     originalCwd: buildConfig.originalCwd,

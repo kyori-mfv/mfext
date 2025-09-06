@@ -9,17 +9,17 @@ export function getBuildConfig() {
 
     return {
         // Directories
-        pagesDir: path.join(originalCwd, "src", "pages"),
+        appDir: path.join(originalCwd, "src", "app"),
         routesDir: path.join(originalCwd, "dist"),
         publicDir: path.join(originalCwd, "public"),
         rscDistDir: path.join(originalCwd, "dist", "rsc"),
         ssrDistDir: path.join(originalCwd, "dist", "ssr"),
 
         // Files
-        routesManifestPath: path.join(
+        appRoutesManifestPath: path.join(
             originalCwd,
             "dist",
-            "routes-manifest.json",
+            "app-routes-manifest.json",
         ),
 
         // Build tool configs

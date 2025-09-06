@@ -1,7 +1,5 @@
 import express from "express";
 import { renderToString } from "react-dom/server";
-import { getPageComponent, loadRoutesManifest } from "~core/router";
-import MainApp from "~core/app";
 import { getBuildConfig } from "../build/build-config.js";
 import { Server } from "http";
 import { Logger } from "./logger";
@@ -121,11 +119,14 @@ export function createSSRServer(
 
     app.get("*", async (req, res) => {
         try {
-            const routesManifest = await loadRoutesManifest();
-            const pageInfo = routesManifest.pages[req.path];
+            const { getAppRoute, loadAllAppComponents } = await import(
+                "~core/router"
+            );
+            const { default: AppRouterMain } = await import("~core/app");
 
-            if (!pageInfo) {
-                logger.warn("Page not found", { path: req.path });
+            const appRoute = await getAppRoute(req.path);
+            if (!appRoute) {
+                logger.warn("App Router page not found", { path: req.path });
                 return res.status(404).send(`
                     <!DOCTYPE html>
                     <html>
@@ -139,14 +140,12 @@ export function createSSRServer(
                 `);
             }
 
-            const title = `React RSC Demo - ${pageInfo.title}`;
-            const { default: pageComponent } = await getPageComponent(
-                req.path,
-                routesManifest,
+            const components = await loadAllAppComponents(appRoute);
+            const AppContent = (
+                <AppRouterMain route={appRoute} components={components} />
             );
-            const appHTML = renderToString(
-                <MainApp pageComponent={pageComponent} />,
-            );
+            const appHTML = renderToString(AppContent);
+            const title = `MFExt App Router - ${req.path}`;
 
             const html = `
                 <!DOCTYPE html>
@@ -156,7 +155,13 @@ export function createSSRServer(
                     </head>
                     <body>
                         <div id="root">${appHTML}</div>
-                        <script>window.__RSC_PATH__ = ${JSON.stringify({ pageInfo })};</script>
+                        <script>window.__RSC_PATH__ = ${JSON.stringify({
+                            pageInfo: {
+                                path: req.path,
+                                title: title,
+                                component: "app-router",
+                            },
+                        })};</script>
                         <script src="/static/client.js" type="module"></script>
                     </body>
                 </html>

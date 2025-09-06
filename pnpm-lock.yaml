@@ -84,6 +84,24 @@ importers:
 
   packages/core:
     dependencies:
+      '@babel/core':
+        specifier: ^7.28.3
+        version: 7.28.3
+      '@babel/preset-env':
+        specifier: ^7.28.3
+        version: 7.28.3(@babel/core@7.28.3)
+      '@babel/preset-react':
+        specifier: ^7.27.1
+        version: 7.27.1(@babel/core@7.28.3)
+      '@babel/preset-typescript':
+        specifier: ^7.23.3
+        version: 7.27.1(@babel/core@7.28.3)
+      babel-loader:
+        specifier: ^10.0.0
+        version: 10.0.0(@babel/core@7.28.3)(webpack@5.101.3)
+      babel-plugin-module-resolver:
+        specifier: ^5.0.0
+        version: 5.0.2
       concurrently:
         specifier: ^9.2.1
         version: 9.2.1
@@ -102,19 +120,16 @@ importers:
       react-dom:
         specifier: ^19.1.1
         version: 19.1.1(react@19.1.1)
+      react-server-dom-webpack:
+        specifier: ^19.1.1
+        version: 19.1.1(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(webpack@5.101.3)
+      webpack:
+        specifier: ^5.101.3
+        version: 5.101.3(webpack-cli@6.0.1)
+      webpack-cli:
+        specifier: ^6.0.1
+        version: 6.0.1(webpack@5.101.3)
     devDependencies:
-      '@babel/core':
-        specifier: ^7.28.3
-        version: 7.28.3
-      '@babel/preset-env':
-        specifier: ^7.28.3
-        version: 7.28.3(@babel/core@7.28.3)
-      '@babel/preset-react':
-        specifier: ^7.27.1
-        version: 7.27.1(@babel/core@7.28.3)
-      '@babel/preset-typescript':
-        specifier: ^7.23.3
-        version: 7.27.1(@babel/core@7.28.3)
       '@mfext/config':
         specifier: workspace:*
         version: link:../config
@@ -133,30 +148,15 @@ importers:
       '@types/react-dom':
         specifier: ^19.1.9
         version: 19.1.9(@types/react@19.1.12)
-      babel-loader:
-        specifier: ^10.0.0
-        version: 10.0.0(@babel/core@7.28.3)(webpack@5.101.3)
-      babel-plugin-module-resolver:
-        specifier: ^5.0.0
-        version: 5.0.2
       husky:
         specifier: ^9.1.7
         version: 9.1.7
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      react-server-dom-webpack:
-        specifier: ^19.1.1
-        version: 19.1.1(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(webpack@5.101.3)
       typescript:
         specifier: ^5.3.3
         version: 5.9.2
-      webpack:
-        specifier: ^5.101.3
-        version: 5.101.3(webpack-cli@6.0.1)
-      webpack-cli:
-        specifier: ^6.0.1
-        version: 6.0.1(webpack@5.101.3)
 
 packages:
 

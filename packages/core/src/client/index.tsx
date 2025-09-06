@@ -1,10 +1,15 @@
 import { createRoot } from "react-dom/client";
 import { createFromReadableStream } from "react-server-dom-webpack/client";
-import { RSCProps } from "~core/types";
+
+interface PageInfo {
+    path: string;
+    title: string;
+    component: string;
+}
 
 declare global {
     interface Window {
-        __RSC_PATH__: RSCProps;
+        __RSC_PATH__: { pageInfo: PageInfo };
         __updateTree: ((stream: ReadableStream) => void) | undefined;
     }
 }

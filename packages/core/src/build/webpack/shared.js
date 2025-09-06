@@ -40,18 +40,7 @@ export class WebpackConfigBuilder {
                             "module-resolver",
                             {
                                 alias: {
-                                    "~core/types": path.resolve(
-                                        __dirname,
-                                        "../../types",
-                                    ),
-                                    "~core/router": path.resolve(
-                                        __dirname,
-                                        "../../router",
-                                    ),
-                                    "~core/app": path.resolve(
-                                        __dirname,
-                                        "../../app",
-                                    ),
+                                    "~core": path.resolve(__dirname, "../.."),
                                 },
                             },
                         ],
@@ -71,11 +60,10 @@ export class WebpackConfigBuilder {
             modules: conditionNames.includes("node")
                 ? [path.resolve(__dirname, "node_modules"), "node_modules"]
                 : undefined,
+            mainFiles: ["index"],
             alias: {
                 "@": path.resolve(this.buildConfig.originalCwd, "src"),
-                "~core/app": path.resolve(__dirname, "../../app"),
-                "~core/types": path.resolve(__dirname, "../../types"),
-                "~core/router": path.resolve(__dirname, "../../router"),
+                "~core": path.resolve(__dirname, "../.."),
             },
         };
     }
@@ -97,6 +85,12 @@ export class WebpackConfigBuilder {
                 rules: this.getModuleRules(includeEnvPreset),
             },
             resolve: this.getResolveConfig(),
+            resolveLoader: {
+                modules: [
+                    "node_modules",
+                    path.resolve(__dirname, "../../../node_modules"),
+                ],
+            },
         };
     }
 

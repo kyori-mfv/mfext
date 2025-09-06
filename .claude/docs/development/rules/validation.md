@@ -42,10 +42,31 @@ curl -s -w "%{http_code}" http://localhost:5001  # RSC - should return 200
 - **RSC Server (:5001)**: Returns React Server Components stream
 - **Both**: HTTP status 200
 
+## Pre-Validation: Auto-Fix Quality Issues
+
+**MANDATORY**: Before running build validation, ALWAYS fix all quality issues by running:
+
+```bash
+pnpm validate    # Check for lint, format, and TypeScript errors
+
+# If pnpm validate fails, auto-fix issues:
+pnpm lint:fix    # Fix ESLint errors automatically
+pnpm format      # Fix Prettier formatting issues automatically
+# For TypeScript errors: Review and fix manually (tsc cannot auto-fix)
+```
+
+## Quality Gates
+
+**All commands must pass before validation**:
+- `pnpm lint` - No ESLint errors
+- `pnpm format:check` - All files properly formatted
+- `pnpm typecheck` - No TypeScript compilation errors
+
 ## Quick Troubleshooting
+- **pnpm validate fails**: Run `pnpm lint:fix` and `pnpm format`, then fix TypeScript errors manually
 - **Build fails**: Run `pnpm playground:clean` then rebuild, check `pnpm typecheck`, `pnpm lint`, and webpack build logs
 - **Servers won't start**: Kill existing processes on ports 5000/5001
-- **404/500 errors**: Verify `dist/routes.json` exists and pages are in `apps/playground/src/pages/`
+- **404/500 errors**: Verify `dist/app-routes-manifest.json` exists and pages are in `apps/playground/src/app/`
 - **Stale build artifacts**: Use `pnpm playground:clean` before rebuilding
 
-**Always run playground validation commands from root folder before considering any task complete.**
+**Always run `pnpm validate` and playground validation commands from root folder before considering any task complete.**

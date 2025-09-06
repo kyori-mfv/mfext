@@ -1,8 +1,23 @@
 {
   "permissions": {
     "allow": [
+        "Read:*",
+        "Write:*",
+        "Edit:*",
+        "MultiEdit:*",
+        "Glob:*",
+        "Grep:*",
         "Bash(mkdir:*)",
+        "Bash(lsof:*)",
+        "Bash(kill:*)",
         "Bash(node:*)",
+        "Bash(rm:*)",
+        "Bash(cp:*)",
+        "Bash(mv:*)",
+        "Bash(create:*)",
+        "Bash(update:*)",
+        "Bash(delete:*)",
+        "Bash(edit:*)",
         "Bash(pnpm:*)",
         "Bash(chmod:*)",
         "Bash(find:*)",

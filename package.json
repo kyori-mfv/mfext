@@ -12,7 +12,14 @@
         "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
         "typecheck": "pnpm -r typecheck",
         "validate": "pnpm lint && pnpm format:check && pnpm typecheck",
-        "prepare": "husky"
+        "prepare": "husky",
+        "playground:build": "pnpm --filter @mfext/playground build",
+        "playground:clean": "pnpm --filter @mfext/playground exec rm -rf dist public",
+        "playground:build:discover": "pnpm --filter @mfext/playground exec mfext build discover",
+        "playground:build:client": "pnpm --filter @mfext/playground exec mfext build client",
+        "playground:build:ssr": "pnpm --filter @mfext/playground exec mfext build ssr",
+        "playground:build:rsc": "pnpm --filter @mfext/playground exec mfext build rsc",
+        "playground:start": "pnpm --filter @mfext/playground start"
     },
     "devDependencies": {
         "@mfext/config": "workspace:*",

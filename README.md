@@ -6,6 +6,7 @@ A full-stack React framework with built-in React Server Components (RSC) and Ser
 
 - **React Server Components (RSC)** - Server-side rendering with streaming and partial hydration
 - **Server-Side Rendering (SSR)** - Traditional SSR support for optimal SEO and performance
+- **Client-Side Navigation** - Next.js-compatible navigation with RSC support
 - **Development Server** - Hot reloading development environment
 - **TypeScript First** - Full TypeScript support with strict type checking
 - **Modern Build System** - Webpack-based build system with optimized bundling
@@ -18,6 +19,7 @@ This is a monorepo with the following structure:
 ```
 ├── packages/
 │   ├── core/          # Framework implementation and CLI
+│   ├── navigation/    # Navigation components and utilities
 │   └── config/        # Shared configurations (ESLint, Prettier, TypeScript)
 ├── apps/
 │   └── playground/    # Example application using the framework
@@ -37,7 +39,7 @@ This is a monorepo with the following structure:
 
 ```bash
 git clone <repository-url>
-cd mf-react-rsc
+cd mfext
 ```
 
 2. Install dependencies:
@@ -49,14 +51,13 @@ pnpm install
 3. Build all packages:
 
 ```bash
-pnpm build
+pnpm playground:build
 ```
 
 4. Start the playground application:
 
 ```bash
-cd apps/playground
-pnpm start
+pnpm playground:start
 ```
 
 ## 📦 Packages
@@ -64,6 +65,10 @@ pnpm start
 ### [@mfext/core](./packages/core/)
 
 The main framework package containing the CLI tool, build system, and server implementations for both RSC and SSR.
+
+### [@mfext/navigation](./packages/navigation/)
+
+Navigation components and utilities providing Next.js-compatible client-side navigation with RSC support. Includes `Link` component, `useRouter` hook, and navigation context.
 
 ### [@mfext/config](./packages/config/)
 
@@ -132,6 +137,31 @@ The framework is built with a modular architecture:
 - **Build Pipeline** - Multi-stage build process with discovery, client, SSR, and RSC compilation
 - **Development Server** - Concurrent development servers for rapid iteration
 - **TypeScript Integration** - Full TypeScript support throughout the stack
+
+## 🎯 Phase 1 Implementation Status - ✅ COMPLETED
+
+Phase 1 focused on implementing core navigation features with React Server Components support:
+
+### ✅ Completed Tasks
+
+1. **App Router Implementation** - Built file-based routing system with Next.js App Router compatibility
+2. **RSC Integration** - Full React Server Components support with streaming and client hydration
+3. **Unified Server Architecture** - Single server handling both SSR and RSC requests
+4. **Navigation System** - Complete client-side navigation with RSC support:
+    - `@mfext/navigation` package with simplified, production-ready components
+    - `Link` component with essential navigation features
+    - `useRouter` hook providing pathname, push, replace, and back functionality
+    - Centralized RSC Manager for navigation state and data fetching
+    - Automatic NavigationProvider injection at framework level
+
+### Key Implementation Details
+
+- **RSC Manager**: Centralized navigation handling with `createFromReadableStream` for React Flight data
+- **Event-Driven Architecture**: Custom events (`mfext-navigation`) for navigation coordination
+- **SSR/Client Consistency**: NavigationProvider wrapping ensures hydration compatibility
+- **Simplified API**: Removed complex features like prefetch, query params, and scroll behavior for production stability
+
+All Phase 1 navigation tasks have been successfully implemented and simplified per requirements.
 
 ## 🤝 Contributing
 

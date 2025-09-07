@@ -1,3 +1,8 @@
+"use client";
+
+import { DashboardSidebar } from "./dashboard-sidebar";
+import Counter from "../components/counter";
+
 export default function DashboardLayout({
     children,
 }: {
@@ -5,20 +10,8 @@ export default function DashboardLayout({
 }) {
     return (
         <div style={{ display: "flex" }}>
-            <aside
-                style={{
-                    width: "200px",
-                    background: "#f5f5f5",
-                    padding: "1rem",
-                }}
-            >
-                <h3>Dashboard Menu</h3>
-                <ul>
-                    <li>Overview</li>
-                    <li>Settings</li>
-                    <li>Reports</li>
-                </ul>
-            </aside>
+            <DashboardSidebar />
+            <Counter />
             <div style={{ flex: 1, padding: "1rem" }}>{children}</div>
         </div>
     );

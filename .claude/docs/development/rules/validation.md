@@ -19,7 +19,7 @@ pnpm playground:build:rsc          # RSC bundle
 ### 2. Start Servers
 ```bash
 # ALWAYS USE PLAYGROUND-SPECIFIC COMMANDS (mandatory for framework validation)
-pnpm playground:start              # Starts playground RSC (:5001) and SSR (:5000)
+pnpm playground:start              # Starts playground
 
 ### 3. Test Both Endpoints
 ```bash
@@ -29,13 +29,13 @@ curl -s -w "%{http_code}" http://localhost:5000/rsc?path=/  # RSC - should retur
 
 ## Expected Results
 - **SSR Server (:5000)**: Returns complete HTML page
-- **RSC Server (:5001)**: Returns React Server Components stream
+- **RSC Server (:5000)**: Returns React Server Components stream
 - **Both**: HTTP status 200
 
 
 ## Quick Troubleshooting
 - **pnpm validate fails**: Run `pnpm lint:fix` and `pnpm format`, then fix TypeScript errors manually
 - **Build fails**: Run `pnpm playground:clean` then rebuild, check `pnpm typecheck`, `pnpm lint`, and webpack build logs
-- **Servers won't start**: Kill existing processes on ports 5000/5001
+- **Servers won't start**: Kill existing processes on ports 5000
 - **404/500 errors**: Verify `dist/app-routes-manifest.json` exists and pages are in `apps/playground/src/app/`
 - **Stale build artifacts**: Use `pnpm playground:clean` before rebuilding

@@ -59,7 +59,13 @@ export class WebpackConfigBuilder {
             conditionNames,
             modules: conditionNames.includes("node")
                 ? [path.resolve(__dirname, "node_modules"), "node_modules"]
-                : undefined,
+                : [
+                      path.resolve(
+                          this.buildConfig.originalCwd,
+                          "node_modules",
+                      ),
+                      "node_modules",
+                  ],
             mainFiles: ["index"],
             alias: {
                 "@": path.resolve(this.buildConfig.originalCwd, "src"),

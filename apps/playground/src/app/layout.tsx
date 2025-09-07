@@ -1,3 +1,7 @@
+"use client";
+
+import { NavigationHeader } from "./navigation-header";
+
 export default function RootLayout({
     children,
 }: {
@@ -6,14 +10,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
-                <header>
-                    <h1>MFExt App</h1>
-                    <nav style={{ display: "flex", gap: "1rem" }}>
-                        <a href="/">Home</a>
-                        <a href="/dashboard">Dashboard</a>
-                        <a href="/dashboard/stats">Stats</a>
-                    </nav>
-                </header>
+                <NavigationHeader />
                 <main>{children}</main>
             </body>
         </html>

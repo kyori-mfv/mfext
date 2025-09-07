@@ -111,7 +111,7 @@ The framework expects applications to follow this structure:
 ```
 your-app/
 ├── src/
-│   ├── pages/         # Page components (file-based routing)
+│   ├── app/         # Page components (file-based routing)
 │   └── components/    # Reusable components
 ├── public/            # Static assets
 └── package.json       # Must include @mfext/core dependency
@@ -124,12 +124,12 @@ your-app/
 Create pages in the `src/pages` directory:
 
 ```tsx
-// src/pages/index.tsx
+// src/app/index.tsx
 export default function HomePage() {
     return <h1>Welcome to MFExt!</h1>;
 }
 
-// src/pages/about.tsx
+// src/app/about.tsx
 export default function AboutPage() {
     return <h1>About Us</h1>;
 }

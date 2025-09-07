@@ -42,7 +42,7 @@ The application will be available at:
 ```
 apps/playground/
 ├── src/
-│   ├── pages/          # File-based routes
+│   ├── app/          # File-based routes
 │   │   ├── index.tsx   # Home page (/)
 │   │   ├── about.tsx   # About page (/about)
 │   │   └── ...
@@ -58,16 +58,16 @@ The playground demonstrates file-based routing:
 
 ### Available Pages
 
-- **`/`** - Home page (`src/pages/index.tsx`)
-- **`/about`** - About page (`src/pages/about.tsx`)
-- **Additional routes** - Add more pages by creating files in `src/pages/`
+- **`/`** - Home page (`src/app/index.tsx`)
+- **`/about`** - About page (`src/app/about.tsx`)
+- **Additional routes** - Add more pages by creating files in `src/app/`
 
 ### Creating New Pages
 
-Create a new file in `src/pages/`:
+Create a new file in `src/app/`:
 
 ```tsx
-// src/pages/contact.tsx
+// src/app/contact.tsx
 export default function ContactPage() {
     return (
         <div>
@@ -247,7 +247,7 @@ This playground is ideal for:
 
 ### Adding Examples
 
-1. Create new pages in `src/pages/`
+1. Create new pages in `src/app/`
 2. Add components to `src/components/`
 3. Update this README with new examples
 4. Test both RSC and SSR modes

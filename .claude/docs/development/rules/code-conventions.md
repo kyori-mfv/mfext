@@ -14,3 +14,6 @@
 - Follow existing code style and patterns in the codebase
 - Maintain consistency with surrounding code
 - Use established libraries and utilities already present in the project
+
+## Naming conventions
+- Use kebab case for all files

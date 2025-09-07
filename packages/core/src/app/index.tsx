@@ -45,7 +45,7 @@ export const AppRouterMain: React.FC<AppRouterMainProps> = ({
         );
     };
 
-    return <>{renderWithLayouts(0)}</>;
+    return renderWithLayouts(0);
 };
 
 export default AppRouterMain;

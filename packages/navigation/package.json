@@ -1,18 +1,16 @@
 {
-    "name": "@mfext/playground",
-    "private": true,
+    "name": "@mfext/navigation",
+    "version": "0.0.0",
     "type": "module",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "scripts": {
-        "build": "mfext build",
-        "start": "mfext start",
-        "dev": "pnpm build && pnpm start",
+        "build": "tsc",
         "lint": "eslint .",
         "lint:fix": "eslint . --fix",
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "@mfext/core": "workspace:*",
-        "@mfext/navigation": "workspace:*",
         "react": "^19.1.1",
         "react-dom": "^19.1.1"
     },
@@ -20,7 +18,14 @@
         "@mfext/config": "workspace:*",
         "@types/react": "^19.1.12",
         "@types/react-dom": "^19.1.9",
-        "tsx": "^4.0.0",
-        "typescript": "^5.0.0"
+        "typescript": "^5.3.3"
+    },
+    "peerDependencies": {
+        "react": "^19.1.1",
+        "react-dom": "^19.1.1"
+    },
+    "engines": {
+        "node": ">=20.0.0",
+        "pnpm": ">=9.0.0"
     }
 }

@@ -81,7 +81,7 @@ mfext build [<type>] [options]
 
 When running `mfext build` or `mfext build all`, the following pipeline executes:
 
-1. **📋 Discover Pages** - Scans `src/pages/` directory
+1. **📋 Discover Pages** - Scans `src/app/` directory
     - Generates route mappings
     - Creates navigation manifest
     - Outputs to `dist/routes.json`
@@ -263,7 +263,7 @@ The CLI expects your project to follow this structure:
 ```
 your-project/
 ├── src/
-│   ├── pages/           # Required: Page components
+│   ├── app/           # Required: Page components
 │   │   ├── index.tsx    # Home page (/)
 │   │   ├── about.tsx    # About page (/about)
 │   │   └── ...
@@ -286,12 +286,12 @@ The CLI respects these environment variables:
 
 The discover command finds pages using these patterns:
 
-- **Pattern**: `src/pages/**/*.{tsx,jsx}`
+- **Pattern**: `src/app/**/*.{tsx,jsx}`
 - **Route Mapping**:
-    - `src/pages/index.tsx` → `/` (Home page)
-    - `src/pages/about.tsx` → `/about`
-    - `src/pages/blog/post.tsx` → `/blog/post`
-    - `src/pages/users/[id].tsx` → `/users/[id]` (future: dynamic routes)
+    - `src/app/index.tsx` → `/` (Home page)
+    - `src/app/about.tsx` → `/about`
+    - `src/app/blog/post.tsx` → `/blog/post`
+    - `src/app/users/[id].tsx` → `/users/[id]` (future: dynamic routes)
 
 ---
 

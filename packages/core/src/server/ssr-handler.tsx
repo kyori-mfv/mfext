@@ -2,6 +2,8 @@ import express from "express";
 import { renderToString } from "react-dom/server";
 import { Logger } from "./logger";
 import { getBuildConfig } from "~core/build/build-config.js";
+import React from "react";
+import { NavigationProvider } from "@mfext/navigation";
 
 const buildConfig = getBuildConfig();
 
@@ -36,7 +38,9 @@ export async function ssrHandler(req: express.Request, res: express.Response) {
 
         const components = await loadAllAppComponents(appRoute);
         const AppContent = (
-            <AppRouterMain route={appRoute} components={components} />
+            <NavigationProvider>
+                <AppRouterMain route={appRoute} components={components} />
+            </NavigationProvider>
         );
         const appHTML = renderToString(AppContent);
         const title = `MFExt App Router - ${req.path}`;

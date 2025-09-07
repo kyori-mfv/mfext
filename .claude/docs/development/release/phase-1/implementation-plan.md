@@ -191,7 +191,7 @@ Each task follows: **Implementation → Playground Demo → Validation**
 ### **After Task 4 (Playground Structure)**:
 ```
 apps/playground/src/
-├── pages/                  ← Keep for compatibility
+├── app/                  ← Keep for compatibility
 │   ├── index.tsx
 │   └── dashboard/
 │       └── index.tsx

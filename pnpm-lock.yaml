@@ -35,6 +35,9 @@ importers:
       '@mfext/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@mfext/navigation':
+        specifier: workspace:*
+        version: link:../../packages/navigation
       react:
         specifier: ^19.1.1
         version: 19.1.1
@@ -96,6 +99,9 @@ importers:
       '@babel/preset-typescript':
         specifier: ^7.23.3
         version: 7.27.1(@babel/core@7.28.3)
+      '@mfext/navigation':
+        specifier: workspace:*
+        version: link:../navigation
       babel-loader:
         specifier: ^10.0.0
         version: 10.0.0(@babel/core@7.28.3)(webpack@5.101.3)
@@ -154,6 +160,28 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
+      typescript:
+        specifier: ^5.3.3
+        version: 5.9.2
+
+  packages/navigation:
+    dependencies:
+      react:
+        specifier: ^19.1.1
+        version: 19.1.1
+      react-dom:
+        specifier: ^19.1.1
+        version: 19.1.1(react@19.1.1)
+    devDependencies:
+      '@mfext/config':
+        specifier: workspace:*
+        version: link:../config
+      '@types/react':
+        specifier: ^19.1.12
+        version: 19.1.12
+      '@types/react-dom':
+        specifier: ^19.1.9
+        version: 19.1.9(@types/react@19.1.12)
       typescript:
         specifier: ^5.3.3
         version: 5.9.2

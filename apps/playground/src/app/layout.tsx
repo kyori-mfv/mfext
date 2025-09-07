@@ -9,6 +9,9 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
+            <head>
+                <title>MFExt App Router</title>
+            </head>
             <body>
                 <NavigationHeader />
                 <main>{children}</main>

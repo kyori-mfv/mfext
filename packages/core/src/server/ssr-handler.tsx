@@ -5,8 +5,6 @@ import { getBuildConfig } from "~core/build/build-config.js";
 import React from "react";
 import { NavigationProvider } from "@mfext/navigation";
 
-const buildConfig = getBuildConfig();
-
 /**
  * SSR Handler - Express middleware for server-side rendering
  * This handler is compiled by webpack and loaded by the unified server
@@ -43,29 +41,30 @@ export async function ssrHandler(req: express.Request, res: express.Response) {
             </NavigationProvider>
         );
         const appHTML = renderToString(AppContent);
-        const title = `MFExt App Router - ${req.path}`;
+        const buildConfig = getBuildConfig();
 
-        const html = `
-            <!DOCTYPE html>
-            <html>
-                <head>
-                    <title>${title}</title>
-                </head>
-                <body>
-                    <div id="root">${appHTML}</div>
-                    <script>window.__RSC_PATH__ = ${JSON.stringify({
-                        pageInfo: {
-                            path: req.path,
-                            title: title,
-                            component: "app-router",
-                        },
-                    })};</script>
-                    <script src="${buildConfig.endpoints.static}/${buildConfig.clientBundleFileName}" type="module"></script>
-                </body>
-            </html>
-        `;
+        // Wrap content in root div and inject scripts
+        const htmlWithScripts = appHTML
+            .replace("<body>", '<body><div id="root">')
+            .replace(
+                "</body>",
+                `</div>
+            <script>
+                window.__RSC_PATH__ = ${JSON.stringify({
+                    pageInfo: {
+                        path: req.path,
+                        title: `MFExt App Router - ${req.path}`,
+                        component: "app-router",
+                    },
+                })};
+            </script>
+            <script src="${buildConfig.endpoints.static}/${buildConfig.clientBundleFileName}" type="module"></script>
+            </body>`,
+            );
 
-        res.setHeader("Content-Type", "text/html").send(html);
+        res.setHeader("Content-Type", "text/html").send(
+            `<!DOCTYPE html>${htmlWithScripts}`,
+        );
     } catch (error) {
         logger.error(
             "SSR rendering error",

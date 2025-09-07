@@ -5,6 +5,7 @@
     "scripts": {
         "build": "mfext build",
         "start": "mfext start",
+        "dev": "pnpm build && pnpm start",
         "lint": "eslint .",
         "lint:fix": "eslint . --fix",
         "typecheck": "tsc --noEmit"

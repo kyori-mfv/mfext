@@ -103,7 +103,7 @@ export class WebpackConfigBuilder {
             entry: path.resolve(__dirname, "../../client/index.tsx"),
             output: {
                 path: this.buildConfig.publicDir,
-                filename: "client.js",
+                filename: this.buildConfig.clientBundleFileName,
                 chunkFilename: "[name].[chunkhash].js",
                 clean: true,
             },
@@ -131,27 +131,24 @@ export class WebpackConfigBuilder {
     buildSSRConfig() {
         return {
             ...this.getBaseConfig(),
-            experiments: {
-                outputModule: true,
-            },
             entry: {
                 "ssr-server": path.resolve(
                     __dirname,
-                    "../../server/ssr-server.tsx",
+                    "../../server/ssr-handler.tsx",
                 ),
             },
             target: "node",
             output: {
                 path: this.buildConfig.ssrDistDir,
-                filename: "ssr-server.js",
+                filename: this.buildConfig.ssrHandlerFileName,
                 clean: true,
                 library: {
-                    type: "module",
+                    type: "commonjs2",
                 },
-                chunkFormat: "module",
+                chunkFormat: "commonjs",
             },
             resolve: this.getResolveConfig(["node"]),
-            externals: [],
+            externals: ["commonjs"],
             plugins: [],
         };
     }
@@ -165,13 +162,13 @@ export class WebpackConfigBuilder {
             entry: {
                 "rsc-server": path.resolve(
                     __dirname,
-                    "../../server/rsc-server.tsx",
+                    "../../server/rsc-handler.tsx",
                 ),
             },
             target: "node",
             output: {
                 path: this.buildConfig.rscDistDir,
-                filename: "rsc-server.cjs",
+                filename: this.buildConfig.rscHandlerFileName,
                 clean: true,
                 library: {
                     type: "commonjs2",
@@ -179,7 +176,11 @@ export class WebpackConfigBuilder {
                 chunkFormat: "commonjs",
             },
             resolve: this.getResolveConfig(["react-server", "node"]),
-            externals: [this.createClientComponentExternal()],
+            externals: [
+                "express",
+                "commonjs",
+                this.createClientComponentExternal(),
+            ],
         };
     }
 

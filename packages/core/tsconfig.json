@@ -10,6 +10,6 @@
             "~core/types/*": ["./src/types/*"]
         }
     },
-    "include": ["src/**/*", "rsc-server.tsx", "ssr-server.tsx", "global.d.ts"],
+    "include": ["src/**/*", "global.d.ts"],
     "exclude": ["node_modules", "dist", "public"]
 }

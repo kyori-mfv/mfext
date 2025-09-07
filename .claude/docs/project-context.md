@@ -11,6 +11,11 @@
 - `packages/config/` - Shared configurations (ESLint, Prettier, TypeScript)
 - `apps/playground/` - Example application using the framework
 
-## Current Status
-
-Active development with basic RSC/SSR functionality, file-based routing, and CLI tools implemented.
+### Server Architecture
+- **Unified Server**: Single Express.js server handling both RSC and SSR requests
+  - RSC endpoint: `/rsc` - Serves React Server Components
+  - SSR endpoint: `*` (catch-all) - Serves server-side rendered pages
+  - Located at: `packages/core/src/server/index.js`
+- **Handler Architecture**: RSC and SSR handlers are built separately and loaded dynamically
+  - RSC handler compiled to `dist/rsc/rsc-server.cjs`
+  - SSR handler compiled to `dist/ssr/ssr-server.cjs`

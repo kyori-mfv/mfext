@@ -4,7 +4,6 @@
     "type": "module",
     "packageManager": "pnpm@10.15.1",
     "scripts": {
-        "build": "pnpm -r build",
         "start": "pnpm -r start",
         "lint": "pnpm -r lint",
         "lint:fix": "pnpm -r lint:fix",
@@ -13,21 +12,22 @@
         "typecheck": "pnpm -r typecheck",
         "validate": "pnpm lint && pnpm format:check && pnpm typecheck",
         "prepare": "husky",
-        "playground:build": "pnpm --filter @mfext/playground build",
-        "playground:clean": "pnpm --filter @mfext/playground exec rm -rf dist public",
+        "playground:clean": "pnpm --filter @mfext/playground exec rm -rf dist",
         "playground:build:discover": "pnpm --filter @mfext/playground exec mfext build discover",
         "playground:build:client": "pnpm --filter @mfext/playground exec mfext build client",
         "playground:build:ssr": "pnpm --filter @mfext/playground exec mfext build ssr",
         "playground:build:rsc": "pnpm --filter @mfext/playground exec mfext build rsc",
-        "playground:start": "pnpm --filter @mfext/playground start"
+        "playground:start": "pnpm --filter @mfext/playground start",
+        "playground:build": "pnpm --filter @mfext/playground build",
+        "playground:dev": "pnpm --filter @mfext/playground dev"
     },
     "devDependencies": {
-        "@mfext/config": "workspace:*",
         "@eslint/js": "^9.0.0",
-        "typescript-eslint": "^8.41.0",
+        "@mfext/config": "workspace:*",
         "eslint": "^9.0.0",
+        "husky": "^9.0.0",
         "prettier": "^3.0.0",
         "typescript": "^5.0.0",
-        "husky": "^9.0.0"
+        "typescript-eslint": "^8.41.0"
     }
 }

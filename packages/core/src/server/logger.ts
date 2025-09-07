@@ -112,7 +112,7 @@ export class Logger {
     }
 
     // Request/Response logging middleware
-    createRequestLogger(serverType: "RSC" | "SSR") {
+    createRequestLogger(serverType: "RSC" | "SSR" | "Unified") {
         return (
             req: express.Request,
             res: express.Response,
@@ -149,7 +149,7 @@ export class Logger {
     }
 
     // Performance monitoring
-    createPerformanceMonitor(serverType: "RSC" | "SSR") {
+    createPerformanceMonitor(serverType: "RSC" | "SSR" | "Unified") {
         const logMemoryUsage = () => {
             const usage = process.memoryUsage();
             this.info(`${serverType} Memory Usage`, {

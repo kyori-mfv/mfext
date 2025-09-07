@@ -16,23 +16,15 @@ pnpm playground:build:client       # Client bundle
 pnpm playground:build:ssr          # SSR bundle 
 pnpm playground:build:rsc          # RSC bundle
 
-# Monorepo-wide commands (only use if specifically required)
-pnpm build                         # Build all packages
-```
-
 ### 2. Start Servers
 ```bash
 # ALWAYS USE PLAYGROUND-SPECIFIC COMMANDS (mandatory for framework validation)
 pnpm playground:start              # Starts playground RSC (:5001) and SSR (:5000)
 
-# Monorepo-wide (only use if specifically required)
-pnpm start                         # Starts all packages
-```
-
 ### 3. Test Both Endpoints
 ```bash
 curl -s -w "%{http_code}" http://localhost:5000  # SSR - should return 200
-curl -s -w "%{http_code}" http://localhost:5001/rsc?path=/  # RSC - should return 200
+curl -s -w "%{http_code}" http://localhost:5000/rsc?path=/  # RSC - should return 200
 ```
 
 ## Expected Results

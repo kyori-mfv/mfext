@@ -8,9 +8,10 @@ export default function RootLayout({
             <body>
                 <header>
                     <h1>MFExt App</h1>
-                    <nav>
-                        <a href="/">Home</a> |{" "}
+                    <nav style={{ display: "flex", gap: "1rem" }}>
+                        <a href="/">Home</a>
                         <a href="/dashboard">Dashboard</a>
+                        <a href="/dashboard/stats">Stats</a>
                     </nav>
                 </header>
                 <main>{children}</main>

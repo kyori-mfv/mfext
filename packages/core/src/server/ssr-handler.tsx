@@ -3,7 +3,7 @@ import { renderToString } from "react-dom/server";
 import { Logger } from "./logger";
 import { getBuildConfig } from "~core/build/build-config.js";
 import React from "react";
-import { NavigationProvider } from "@mfext/navigation";
+import { NavigationProvider } from "@kyori-mfv/mfext-navigation";
 
 /**
  * SSR Handler - Express middleware for server-side rendering

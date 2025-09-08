@@ -1,7 +1,10 @@
 import { createFromReadableStream } from "react-server-dom-webpack/client";
 import type { Root } from "react-dom/client";
 import React from "react";
-import { NavigationProvider, NAVIGATION_EVENT } from "@mfext/navigation";
+import {
+    NavigationProvider,
+    NAVIGATION_EVENT,
+} from "@kyori-mfv/mfext-navigation";
 
 interface PageInfo {
     path: string;

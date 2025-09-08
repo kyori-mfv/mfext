@@ -1,6 +1,7 @@
 {
-    "name": "@mfext/core",
-    "version": "0.0.0",
+    "name": "@kyori-mfv/mfext-core",
+    "version": "0.1.0",
+    "description": "Modern React framework with built-in React Server Components and SSR support",
     "type": "module",
     "scripts": {
         "lint": "eslint .",
@@ -10,8 +11,36 @@
     "bin": {
         "mfext": "bin/cli.js"
     },
+    "files": [
+        "bin",
+        "src",
+        "README.md"
+    ],
+    "keywords": [
+        "react",
+        "framework",
+        "server-components",
+        "rsc",
+        "ssr",
+        "nextjs",
+        "typescript"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kyori-mfv/mfext.git",
+        "directory": "packages/core"
+    },
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com"
+    },
+    "homepage": "https://github.com/kyori-mfv/mfext#readme",
+    "bugs": {
+        "url": "https://github.com/kyori-mfv/mfext/issues"
+    },
+    "author": "MFExt Team",
+    "license": "MIT",
     "dependencies": {
-        "@mfext/navigation": "workspace:*",
+        "@kyori-mfv/mfext-navigation": "workspace:*",
         "concurrently": "^9.2.1",
         "express": "^4.21.2",
         "fs-extra": "^11.3.1",
@@ -29,7 +58,7 @@
         "webpack-cli": "^6.0.1"
     },
     "devDependencies": {
-        "@mfext/config": "workspace:*",
+        "@kyori-mfv/mfext-config": "workspace:*",
         "@types/express": "^4.17.21",
         "@types/fs-extra": "^11.0.4",
         "@types/node": "^20.11.0",

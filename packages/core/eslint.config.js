@@ -1,4 +1,4 @@
-import eslintConfig from "@mfext/config/eslint";
+import eslintConfig from "@kyori-mfv/mfext-config/eslint";
 
 export default [
     ...eslintConfig,

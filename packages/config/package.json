@@ -1,9 +1,9 @@
 {
-    "name": "@mfext/config",
-    "version": "0.0.0",
-    "private": true,
+    "name": "@kyori-mfv/mfext-config",
+    "version": "0.1.0",
+    "description": "Shared configurations for ESLint, Prettier, and TypeScript in MFExt projects",
     "type": "module",
-    "main": "dist/index.js",
+    "main": "eslint.config.js",
     "scripts": {
         "lint": "eslint .",
         "lint:fix": "eslint . --fix"
@@ -18,8 +18,30 @@
     "files": [
         "eslint.config.js",
         "prettier.config.js",
-        "tsconfig.json"
+        "tsconfig.json",
+        "README.md"
     ],
+    "keywords": [
+        "eslint",
+        "prettier",
+        "typescript",
+        "config",
+        "mfext"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kyori-mfv/mfext.git",
+        "directory": "packages/config"
+    },
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com"
+    },
+    "homepage": "https://github.com/kyori-mfv/mfext#readme",
+    "bugs": {
+        "url": "https://github.com/kyori-mfv/mfext/issues"
+    },
+    "author": "MFExt Team",
+    "license": "MIT",
     "devDependencies": {
         "@eslint/js": "^9.0.0",
         "@typescript-eslint/eslint-plugin": "^8.0.0",

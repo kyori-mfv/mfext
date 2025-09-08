@@ -60,21 +60,46 @@ pnpm playground:build
 pnpm playground:start
 ```
 
+## 🚀 Using Published Packages
+
+```bash
+# Configure your project to use GitHub Packages
+cat > .npmrc << EOF
+@kyori-mfv:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=\${GITHUB_TOKEN}
+EOF
+
+# Set your GitHub token (with read:packages permission)
+export GITHUB_TOKEN=your_github_token_here
+
+# Install packages in your project
+npm install @kyori-mfv/mfext-core @kyori-mfv/mfext-navigation react react-dom
+
+# Create basic app structure
+mkdir -p src/app
+echo 'export default function Page() { return <h1>Hello MFExt!</h1>; }' > src/app/page.tsx
+echo 'export default function Layout({ children }: { children: React.ReactNode }) { return <html><body>{children}</body></html>; }' > src/app/layout.tsx
+
+# Build and start
+npx mfext build
+npx mfext start
+```
+
 ## 📦 Packages
 
-### [@mfext/core](./packages/core/)
+### [@kyori-mfv/mfext-core](./packages/core/)
 
-The main framework package containing the CLI tool, build system, and server implementations for both RSC and SSR.
+**CLI Tool Package** - Contains the `mfext` command-line tool for building and running applications. This is not a library package - users interact with it via the CLI commands (`mfext build`, `mfext start`).
 
-### [@mfext/navigation](./packages/navigation/)
+### [@kyori-mfv/mfext-navigation](./packages/navigation/)
 
 Navigation components and utilities providing Next.js-compatible client-side navigation with RSC support. Includes `Link` component, `useRouter` hook, and navigation context.
 
-### [@mfext/config](./packages/config/)
+### [@kyori-mfv/mfext-config](./packages/config/)
 
 Shared configuration files for ESLint, Prettier, and TypeScript used across the monorepo.
 
-### [@mfext/playground](./apps/playground/)
+### [@kyori-mfv/mfext-playground](./apps/playground/)
 
 Example application demonstrating framework usage with sample pages and components.
 
@@ -138,30 +163,58 @@ The framework is built with a modular architecture:
 - **Development Server** - Concurrent development servers for rapid iteration
 - **TypeScript Integration** - Full TypeScript support throughout the stack
 
-## 🎯 Phase 1 Implementation Status - ✅ COMPLETED
+## 🎯 Development Phases
 
-Phase 1 focused on implementing core navigation features with React Server Components support:
+### ✅ Phase 0: Foundation (Completed)
 
-### ✅ Completed Tasks
+- React Server Components (RSC) with streaming
+- Server-Side Rendering (SSR)
+- Build System with Webpack
+- CLI Tool (`mfext build`, `mfext start`)
+- TypeScript Integration
+- Monorepo Architecture
 
-1. **App Router Implementation** - Built file-based routing system with Next.js App Router compatibility
-2. **RSC Integration** - Full React Server Components support with streaming and client hydration
-3. **Unified Server Architecture** - Single server handling both SSR and RSC requests
-4. **Navigation System** - Complete client-side navigation with RSC support:
-    - `@mfext/navigation` package with simplified, production-ready components
-    - `Link` component with essential navigation features
-    - `useRouter` hook providing pathname, push, replace, and back functionality
-    - Centralized RSC Manager for navigation state and data fetching
-    - Automatic NavigationProvider injection at framework level
+### ✅ Phase 1: UI Foundation (Completed)
 
-### Key Implementation Details
+- File-based Routing with `src/app/` directory structure
+- Layout System with `layout.tsx` files
+- Client Navigation with `<Link>` component and `useRouter()` hook
+- `@kyori-mfv/mfext-navigation` package with complete navigation system
+- Event-driven navigation architecture with RSC Manager
+- Unified server handling both SSR and RSC requests
 
-- **RSC Manager**: Centralized navigation handling with `createFromReadableStream` for React Flight data
-- **Event-Driven Architecture**: Custom events (`mfext-navigation`) for navigation coordination
-- **SSR/Client Consistency**: NavigationProvider wrapping ensures hydration compatibility
-- **Simplified API**: Removed complex features like prefetch, query params, and scroll behavior for production stability
+### ✅ Phase 2: Package Management & Publishing (Completed)
 
-All Phase 1 navigation tasks have been successfully implemented and simplified per requirements.
+- NPM-ready package structure with proper exports and TypeScript declarations
+- Automated release pipeline with comprehensive validation
+- **Changesets** for professional version management and changelog generation
+- Individual package.json files with proper dependencies/peer dependencies
+- **Published Packages:**
+    - `@kyori-mfv/mfext-core` - CLI framework tool
+    - `@kyori-mfv/mfext-navigation` - React navigation library
+    - `@kyori-mfv/mfext-config` - Shared configurations
+
+**Release Commands:**
+
+```bash
+# 1. Document changes after making modifications
+pnpm changeset
+
+# 2. Update versions when ready to release
+pnpm bump
+
+# 3. Publish to GitHub Packages
+pnpm release
+
+# Snapshot releases for testing
+pnpm release:snapshot
+```
+
+### 🔄 Phase 3: Routing Enhancement (Next)
+
+- Dynamic Routes (`[id].tsx`, `[...slug].tsx`)
+- Enhanced server data fetching with Suspense
+- Route parameter extraction and typing
 
 ## 🤝 Contributing
 

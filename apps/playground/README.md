@@ -1,4 +1,4 @@
-# @mfext/playground
+# @kyori-mfv/mfext-playground
 
 Example application demonstrating the usage of the MFExt React Server Components framework. This playground serves as both a testing environment and a reference implementation for building applications with the framework.
 
@@ -120,12 +120,12 @@ export default function Button({ children, onClick }: ButtonProps) {
 ```json
 {
     "dependencies": {
-        "@mfext/core": "workspace:*", // Framework core
+        "@kyori-mfv/mfext-core": "workspace:*", // Framework core
         "react": "^19.1.1", // React 19 with RSC support
         "react-dom": "^19.1.1" // React DOM renderer
     },
     "devDependencies": {
-        "@mfext/config": "workspace:*", // Shared configurations
+        "@kyori-mfv/mfext-config": "workspace:*", // Shared configurations
         "typescript": "^5.0.0" // TypeScript compiler
     }
 }

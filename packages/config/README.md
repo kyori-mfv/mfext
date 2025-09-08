@@ -1,6 +1,14 @@
-# @mfext/config
+# @kyori-mfv/mfext-config
 
 Shared configuration package providing consistent ESLint, Prettier, and TypeScript configurations across the MFExt monorepo.
+
+## 📦 Package Status
+
+**Current Status:** ✅ **Published to GitHub Packages**
+
+- **Package Name:** `@kyori-mfv/mfext-config`
+- **Registry:** GitHub Packages (`npm.pkg.github.com`)
+- **Type:** Configuration Package (No build required)
 
 ## 🚀 Features
 
@@ -14,7 +22,7 @@ Shared configuration package providing consistent ESLint, Prettier, and TypeScri
 This package is typically used as a workspace dependency:
 
 ```bash
-pnpm add -D @mfext/config
+pnpm add -D @kyori-mfv/mfext-config
 ```
 
 ## 🛠 Usage
@@ -24,7 +32,7 @@ pnpm add -D @mfext/config
 Import the ESLint configuration in your project's `eslint.config.js`:
 
 ```javascript
-import mfextConfig from "@mfext/config/eslint";
+import mfextConfig from "@kyori-mfv/mfext-config/eslint";
 
 export default [...mfextConfig];
 ```
@@ -32,7 +40,7 @@ export default [...mfextConfig];
 Or for browser-specific configurations:
 
 ```javascript
-import mfextBrowserConfig from "@mfext/config/eslint/browser";
+import mfextBrowserConfig from "@kyori-mfv/mfext-config/eslint/browser";
 ```
 
 ### Prettier Configuration
@@ -40,7 +48,7 @@ import mfextBrowserConfig from "@mfext/config/eslint/browser";
 Import in your `prettier.config.js`:
 
 ```javascript
-import prettierConfig from "@mfext/config/prettier";
+import prettierConfig from "@kyori-mfv/mfext-config/prettier";
 
 export default prettierConfig;
 ```
@@ -51,7 +59,7 @@ Extend the base configuration in your `tsconfig.json`:
 
 ```json
 {
-    "extends": "@mfext/config/tsconfig",
+    "extends": "@kyori-mfv/mfext-config/tsconfig",
     "compilerOptions": {
         "outDir": "./dist"
     },
@@ -112,7 +120,7 @@ Projects can extend these configurations with their own rules:
 ### Custom ESLint Rules
 
 ```javascript
-import mfextConfig from "@mfext/config/eslint";
+import mfextConfig from "@kyori-mfv/mfext-config/eslint";
 
 export default [
     ...mfextConfig,
@@ -128,7 +136,7 @@ export default [
 ### Custom Prettier Settings
 
 ```javascript
-import prettierConfig from "@mfext/config/prettier";
+import prettierConfig from "@kyori-mfv/mfext-config/prettier";
 
 export default {
     ...prettierConfig,
@@ -140,12 +148,27 @@ export default {
 
 ```json
 {
-    "extends": "@mfext/config/tsconfig",
+    "extends": "@kyori-mfv/mfext-config/tsconfig",
     "compilerOptions": {
         "strict": false,
         "target": "ES2020"
     }
 }
+```
+
+## 📦 Release Management
+
+This package uses **Changesets** for version management:
+
+```bash
+# Document changes
+pnpm changeset
+
+# Update versions
+pnpm bump
+
+# Publish to GitHub Packages
+pnpm release
 ```
 
 ## 📋 Dependencies

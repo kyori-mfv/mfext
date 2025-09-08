@@ -1,11 +1,46 @@
 {
-    "name": "@mfext/navigation",
-    "version": "0.0.0",
+    "name": "@kyori-mfv/mfext-navigation",
+    "version": "0.1.0",
+    "description": "Navigation components and hooks for MFExt React framework",
     "type": "module",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
+    "files": [
+        "dist",
+        "README.md"
+    ],
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "default": "./dist/index.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "keywords": [
+        "react",
+        "navigation",
+        "router",
+        "link",
+        "mfext"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kyori-mfv/mfext.git",
+        "directory": "packages/navigation"
+    },
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com"
+    },
+    "homepage": "https://github.com/kyori-mfv/mfext#readme",
+    "bugs": {
+        "url": "https://github.com/kyori-mfv/mfext/issues"
+    },
+    "author": "MFExt Team",
+    "license": "MIT",
     "scripts": {
         "build": "tsc",
+        "prepublishOnly": "pnpm build",
         "lint": "eslint .",
         "lint:fix": "eslint . --fix",
         "typecheck": "tsc --noEmit"
@@ -15,7 +50,7 @@
         "react-dom": "^19.1.1"
     },
     "devDependencies": {
-        "@mfext/config": "workspace:*",
+        "@kyori-mfv/mfext-config": "workspace:*",
         "@types/react": "^19.1.12",
         "@types/react-dom": "^19.1.9",
         "typescript": "^5.3.3"

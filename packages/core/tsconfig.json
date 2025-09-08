@@ -1,5 +1,5 @@
 {
-    "extends": "@mfext/config/tsconfig",
+    "extends": "@kyori-mfv/mfext-config/tsconfig",
     "compilerOptions": {
         "outDir": "dist",
         "declaration": true,

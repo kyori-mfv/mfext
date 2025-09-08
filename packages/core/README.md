@@ -1,4 +1,4 @@
-# @mfext/core
+# @kyori-mfv/mfext-core
 
 The core framework package that provides the CLI, build system, and server implementations for React Server Components (RSC) and Server-Side Rendering (SSR).
 
@@ -14,7 +14,7 @@ The core framework package that provides the CLI, build system, and server imple
 ## 📦 Installation
 
 ```bash
-pnpm add @mfext/core
+pnpm add @kyori-mfv/mfext-core
 ```
 
 ## 🛠 CLI Usage
@@ -114,7 +114,7 @@ your-app/
 │   ├── app/         # Page components (file-based routing)
 │   └── components/    # Reusable components
 ├── public/            # Static assets
-└── package.json       # Must include @mfext/core dependency
+└── package.json       # Must include @kyori-mfv/mfext-core dependency
 ```
 
 ## 🎯 Usage in Applications
@@ -147,9 +147,32 @@ Add these scripts to your application's `package.json`:
         "dev": "mfext start --mode development"
     },
     "dependencies": {
-        "@mfext/core": "workspace:*"
+        "@kyori-mfv/mfext-core": "workspace:*"
     }
 }
+```
+
+## 📦 Package Status
+
+**Current Status:** ✅ **Published to GitHub Packages**
+
+- **Package Name:** `@kyori-mfv/mfext-core`
+- **Registry:** GitHub Packages (`npm.pkg.github.com`)
+- **Type:** CLI Tool (No library exports)
+
+### Release Management
+
+This package uses **Changesets** for version management:
+
+```bash
+# Document changes
+pnpm changeset
+
+# Update versions
+pnpm bump
+
+# Publish to GitHub Packages
+pnpm release
 ```
 
 ## 🔍 Development

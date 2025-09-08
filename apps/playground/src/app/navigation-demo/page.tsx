@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, Link } from "@mfext/navigation";
+import { useRouter, Link } from "@kyori-mfv/mfext-navigation";
 import { useState } from "react";
 
 export default function NavigationDemo() {

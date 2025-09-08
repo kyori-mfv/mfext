@@ -1,6 +1,6 @@
 "use client";
 
-import { Link } from "@mfext/navigation";
+import { Link } from "@kyori-mfv/mfext-navigation";
 import { useState } from "react";
 
 export function DashboardSidebar() {

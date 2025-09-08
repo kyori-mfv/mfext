@@ -1,5 +1,5 @@
 {
-    "name": "@mfext/playground",
+    "name": "@kyori-mfv/mfext-playground",
     "private": true,
     "type": "module",
     "scripts": {
@@ -11,13 +11,13 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "@mfext/core": "workspace:*",
-        "@mfext/navigation": "workspace:*",
+        "@kyori-mfv/mfext-core": "workspace:*",
+        "@kyori-mfv/mfext-navigation": "workspace:*",
         "react": "^19.1.1",
         "react-dom": "^19.1.1"
     },
     "devDependencies": {
-        "@mfext/config": "workspace:*",
+        "@kyori-mfv/mfext-config": "workspace:*",
         "@types/react": "^19.1.12",
         "@types/react-dom": "^19.1.9",
         "tsx": "^4.0.0",
